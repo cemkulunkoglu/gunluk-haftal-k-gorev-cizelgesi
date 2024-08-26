@@ -1,0 +1,14 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Sabah Meditasyonu ile Güne Enerjik Başla",
+      "taskDesc": "Bugün, güne enerjik ve pozitif başlamak için 10 dakikalık bir sabah meditasyonu yap. Sessiz bir yer bul, gözlerini kapat ve derin nefesler alarak zihnini sakinleştir. Bu basit ama etkili meditasyon, gün boyunca daha odaklı ve huzurlu hissetmene yardımcı olacak."
+    },
+    {
+      "id": "2",
+      "title": "Yabancı Bir Yemeği Deneyimle",
+      "taskDesc": "Bugünün görevi, hiç denemediğin bir ülkeden bir yemek yapmak ya da sipariş vermek. Bu deneyimle hem damak tadını genişletecek hem de farklı kültürleri keşfedeceksin. Yemek yapıyorsan tarifin detaylarını araştır, malzemelerini hazırla ve yeni bir lezzeti keşfetmenin keyfini çıkar!"
+    }
+  ]
+}
