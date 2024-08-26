@@ -1,8 +1,29 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import TaskCreate from "./TaskCreate";
+import { TaskContext } from '../context/task';
 
-function TaskShow({ task, onDelete, onUpdate }) {
+function TaskShow({ task }) {
+    const { deleteTaskById, editTaskById } = useContext(TaskContext);
     const [showEdit, setShowEdit] = useState(false);
+    const [updatedTask, setUpdatedTask] = useState(task);
+
+    const handleDeleteClick = () => {
+        deleteTaskById(task.id);
+    };
+
+    const handleEditClick = () => {
+        setShowEdit(!showEdit);
+    };
+
+    const handleSubmit = async (id, updatedTitle, updatedTaskDesc) => {
+        await editTaskById(id, updatedTitle, updatedTaskDesc);
+        setUpdatedTask({ id, title: updatedTitle, taskDesc: updatedTaskDesc });
+        setShowEdit(false);
+    };
+
+    const handleCancelClick = () => {
+        setShowEdit(false);
+    };
 
     const formatDescription = (description) => {
         return description.split('\n').map((str, index) => (
@@ -13,36 +34,19 @@ function TaskShow({ task, onDelete, onUpdate }) {
         ));
     };
 
-    const handleDeleteClick = () => {
-        onDelete(task.id);
-    };
-
-    const handleEditClick = () => {
-        setShowEdit(!showEdit);
-    };
-
-    const handleSubmit = (id, updatedTitle, updatedTaskDesc) => {
-        setShowEdit(false);
-        onUpdate(id, updatedTitle, updatedTaskDesc);
-    };
-
-    const handleCancelClick = () => {
-        setShowEdit(false);
-    };
-
     return (
         <div className="card mb-3">
             {showEdit ?
-                <TaskCreate 
-                    task={task} 
-                    taskFormUpdate={true} 
-                    onUpdate={handleSubmit} 
-                    onCancel={handleCancelClick} 
+                <TaskCreate
+                    task={updatedTask}
+                    taskFormUpdate={true}
+                    onUpdate={handleSubmit}
+                    onCancel={handleCancelClick}
                 />
                 :
                 <div>
                     <div className="card-header d-flex justify-content-between align-items-center">
-                        <h5 className="card-title">{task.title}</h5>
+                        <h5 className="card-title">{updatedTask.title}</h5>
                         <button
                             type="button"
                             className="btn-close"
@@ -52,7 +56,7 @@ function TaskShow({ task, onDelete, onUpdate }) {
                         ></button>
                     </div>
                     <div className="card-body">
-                        <p className="card-text">{formatDescription(task.taskDesc)}</p>
+                        <p className="card-text">{formatDescription(updatedTask.taskDesc)}</p>
                         <div className="d-flex justify-content-end">
                             <button className="btn btn-outline-warning"
                                 onClick={handleEditClick}

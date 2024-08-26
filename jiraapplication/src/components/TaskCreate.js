@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function TaskCreate({ onCreate, task, taskFormUpdate, onUpdate, onCancel }) {
     const [title, setTitle] = useState(task ? task.title : '');
     const [taskDesc, setTaskDesc] = useState(task ? task.taskDesc : '');
+
+    useEffect(() => {
+        if (task) {
+            setTitle(task.title);
+            setTaskDesc(task.taskDesc);
+        }
+    }, [task]);
 
     const handleChange = (event) => {
         setTitle(event.target.value);
@@ -18,9 +25,9 @@ function TaskCreate({ onCreate, task, taskFormUpdate, onUpdate, onCancel }) {
             onUpdate(task.id, title, taskDesc);
         } else {
             onCreate(title, taskDesc);
+            setTitle('');
+            setTaskDesc('');
         }
-        setTitle('');
-        setTaskDesc('');
     };
 
     const handleCancelClick = () => {
