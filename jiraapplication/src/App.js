@@ -9,7 +9,11 @@ function App() {
     return (
         <TaskProvider>
             <div className="container">
-                <TaskCreate />
+                <TaskContext.Consumer>
+                    {({ createTask }) => (
+                        <TaskCreate onCreate={createTask} />
+                    )}
+                </TaskContext.Consumer>
                 <hr />
                 <TaskList />
 
