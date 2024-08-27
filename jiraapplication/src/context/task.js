@@ -10,11 +10,13 @@ function TaskProvider({ children }) {
 
     const createTask = async (title, taskDesc) => {
         const newId = tasks.length > 0 ? Math.max(...tasks.map(task => task.id)) + 1 : 1;
+        const createdAt = new Date().toLocaleString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 
         const response = await axios.post('http://localhost:3004/tasks', {
             id: newId,
             title,
             taskDesc,
+            createdAt,
         });
 
         const createdTasks = [
@@ -37,15 +39,18 @@ function TaskProvider({ children }) {
     };
 
     const editTaskById = async (id, updatedTitle, updatedTaskDesc) => {
+        const updatedAt = new Date().toLocaleString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
         await axios.put(`http://localhost:3004/tasks/${id}`, {
             id,
             title: updatedTitle,
-            taskDesc: updatedTaskDesc
+            taskDesc: updatedTaskDesc,
+            updatedAt,
         });
 
         const updatedTasks = tasks.map((task) => {
             if (task.id === id) {
-                return { id, title: updatedTitle, taskDesc: updatedTaskDesc };
+                return { id, title: updatedTitle, taskDesc: updatedTaskDesc, createdAt: task.createdAt, updatedAt };
             }
             return task;
         });

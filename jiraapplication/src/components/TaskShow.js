@@ -17,7 +17,8 @@ function TaskShow({ task }) {
 
     const handleSubmit = async (id, updatedTitle, updatedTaskDesc) => {
         await editTaskById(id, updatedTitle, updatedTaskDesc);
-        setUpdatedTask({ id, title: updatedTitle, taskDesc: updatedTaskDesc });
+        const updatedAt = new Date().toLocaleString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        setUpdatedTask({ id, title: updatedTitle, taskDesc: updatedTaskDesc, createdAt: task.createdAt, updatedAt });
         setShowEdit(false);
     };
 
@@ -57,12 +58,21 @@ function TaskShow({ task }) {
                     </div>
                     <div className="card-body">
                         <p className="card-text">{formatDescription(updatedTask.taskDesc)}</p>
-                        <div className="d-flex justify-content-end">
-                            <button className="btn btn-outline-warning"
-                                onClick={handleEditClick}
-                            >
-                                Güncelle
-                            </button>
+                        <div className="d-flex justify-content-between">
+                            <div>
+                                {updatedTask.updatedAt ? (
+                                    <p className="card-text"><small className="text-muted">Güncellendi: {updatedTask.updatedAt}</small></p>
+                                ) : (
+                                    <p className="card-text"><small className="text-muted">Eklendi: {updatedTask.createdAt}</small></p>
+                                )}
+                            </div>
+                            <div>
+                                <button className="btn btn-outline-warning"
+                                    onClick={handleEditClick}
+                                >
+                                    Güncelle
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
